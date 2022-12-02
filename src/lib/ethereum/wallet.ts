@@ -2,6 +2,7 @@ import * as SecureStore from "expo-secure-store";
 import { ethers } from "ethers";
 import { AssetType, sendEther, sendToken } from "./assets";
 import { getNetwork } from "./network";
+import { entropyToMnemonic } from "ethers/lib/utils";
 
 const PRIVATE_KEY_STORAGE_KEY = "Ethereum.privatekey";
 
@@ -11,7 +12,7 @@ export enum WalletStorageType {
 }
 
 const generateMnemonics = () => {
-  return ethers.utils.HDNode.entropyToMnemonic(
+  return entropyToMnemonic(
     ethers.utils.randomBytes(16)
   ).split(" ");
 };
