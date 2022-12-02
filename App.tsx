@@ -1,4 +1,5 @@
 import "./global";
+import "react-native-get-random-values"
 import "@ethersproject/shims";
 import React from "react";
 import WalletProvider from "./src/components/EthereumProvider";
