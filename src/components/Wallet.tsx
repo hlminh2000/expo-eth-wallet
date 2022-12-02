@@ -9,6 +9,7 @@ import {
 import { ethers } from "ethers";
 import { EthereumContext } from "./EthereumProvider";
 import { Asset, AssetType } from "../lib/ethereum/assets";
+import { Button } from 'react-native-paper';
 
 class Wallet extends React.Component<{
   assets: Asset[];
@@ -34,9 +35,9 @@ class Wallet extends React.Component<{
     const { assets, wallet, createWallet, sendAsset } = this.props;
     return !wallet ? (
       <View style={styles.centerContainer}>
-        <TouchableOpacity onPress={createWallet}>
-          <Text>Create Wallet</Text>
-        </TouchableOpacity>
+        <Button mode="contained" onPress={createWallet}>
+          Create Wallet
+        </Button>
       </View>
     ) : (
       <View style={styles.container}>
