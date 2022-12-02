@@ -4,16 +4,20 @@ import {
   createWallet,
   loadWallet,
   sendAsset,
-  WalletStorageType
+  WalletStorageType,
 } from "../lib/ethereum/wallet";
 import { loadAssets, AssetType, Asset } from "../lib/ethereum/assets";
 
-const ASSETS = [AssetType.eth, AssetType.dai];
+const ASSETS = [AssetType.eth, AssetType.test];
 
 export interface Ethereum {
   wallet: ethers.Wallet;
   assets: Asset[];
-  sendAsset: (to: string, amount: number, type: AssetType) => Promise<ethers.providers.TransactionResponse>;
+  sendAsset: (
+    to: string,
+    amount: number,
+    type: AssetType
+  ) => Promise<ethers.providers.TransactionResponse>;
   createWallet: () => void;
   loading: boolean;
 }
@@ -33,20 +37,22 @@ class EthereumProvider extends React.Component<EthereumProviderProps> {
       const assets = await loadAssets(ASSETS, wallet);
       this.setState({ wallet, assets, loading: false });
     } catch (e) {
-      console.log("ERROR", e);
       this.setState({ loading: false });
     }
   };
 
-  public sendAsset = async (to: string, amount: number, type: AssetType): Promise<ethers.providers.TransactionResponse> => {
+  public sendAsset = async (
+    to: string,
+    amount: number,
+    type: AssetType
+  ): Promise<ethers.providers.TransactionResponse> => {
     const transaction = await sendAsset({
       wallet: this.state.wallet,
       to,
       amount,
-      type
+      type,
     });
-    console.log("transaction", transaction);
-    return transaction
+    return transaction;
   };
 
   public createWallet = async () => {
@@ -61,7 +67,7 @@ class EthereumProvider extends React.Component<EthereumProviderProps> {
     const value = {
       ...this.state,
       createWallet: this.createWallet,
-      sendAsset: this.sendAsset
+      sendAsset: this.sendAsset,
     };
     return (
       <EthereumContext.Provider value={value}>

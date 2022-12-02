@@ -1,5 +1,11 @@
 import * as React from "react";
-import { StyleSheet, Text, View, TouchableOpacity, ActivityIndicator } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  ActivityIndicator,
+} from "react-native";
 import { ethers } from "ethers";
 import { EthereumContext } from "./EthereumProvider";
 import { Asset, AssetType } from "../lib/ethereum/assets";
@@ -7,20 +13,24 @@ import { Asset, AssetType } from "../lib/ethereum/assets";
 class Wallet extends React.Component<{
   assets: Asset[];
   wallet: ethers.Wallet;
-  createWallet: () => void
-  sendAsset: (to: string, amount: number, type: AssetType) => Promise<ethers.providers.TransactionResponse>
+  createWallet: () => void;
+  sendAsset: (
+    to: string,
+    amount: number,
+    type: AssetType
+  ) => Promise<ethers.providers.TransactionResponse>;
 }> {
-  state = { network: '' };
+  state = { network: "" };
 
   public componentDidMount = async () => {
     if (this.props.wallet) {
-      const network = await this.props.wallet.provider.getNetwork()
-      this.setState({ network: network.name })
+      const network = await this.props.wallet.provider.getNetwork();
+      this.setState({ network: network.name });
     }
-  }
+  };
 
   public render() {
-    const { network } = this.state
+    const { network } = this.state;
     const { assets, wallet, createWallet, sendAsset } = this.props;
     return !wallet ? (
       <View style={styles.centerContainer}>
@@ -31,12 +41,20 @@ class Wallet extends React.Component<{
     ) : (
       <View style={styles.container}>
         <Text>{network}</Text>
-        {assets.map(asset => (
+        {assets.map((asset) => (
           <View key={asset.type} style={styles.row}>
             <Text>{asset.type}</Text>
             <Text>{wallet.address}</Text>
             <Text>Balance: {asset.balance}</Text>
-            <TouchableOpacity onPress={() => sendAsset('0x24440C989754C4Ab1636c24d19e19aAb9D068493', 0.1, asset.type)}>
+            <TouchableOpacity
+              onPress={() =>
+                sendAsset(
+                  "0x24440C989754C4Ab1636c24d19e19aAb9D068493",
+                  0.1,
+                  asset.type
+                )
+              }
+            >
               <Text>Send 0.1</Text>
             </TouchableOpacity>
           </View>
@@ -54,7 +72,12 @@ const WalletWithData = () => (
           <ActivityIndicator size="large" />
         </View>
       ) : (
-        <Wallet assets={assets} wallet={wallet} createWallet={createWallet} sendAsset={sendAsset} />
+        <Wallet
+          assets={assets}
+          wallet={wallet}
+          createWallet={createWallet}
+          sendAsset={sendAsset}
+        />
       )
     }
   </EthereumContext.Consumer>
@@ -65,17 +88,17 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
     alignItems: "flex-end",
-    justifyContent: "center"
+    justifyContent: "center",
   },
   centerContainer: {
     flex: 1,
     backgroundColor: "#fff",
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
   },
   row: {
-    margin: 5
-  }
+    margin: 5,
+  },
 });
 
 export default WalletWithData;
