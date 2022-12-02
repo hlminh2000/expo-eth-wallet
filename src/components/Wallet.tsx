@@ -33,7 +33,7 @@ const Wallet: React.ComponentType<{
       <Appbar.Header>
         <Appbar.Action icon={"menu"} onPress={() => {}} />
         <Appbar.Content title="Wallet" />
-        <Appbar.Action icon="magnify" onPress={() => {}} />
+        <Appbar.Action icon="plus" onPress={() => {}} />
       </Appbar.Header>
       {!wallet ? (
         <View>
