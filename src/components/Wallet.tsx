@@ -11,7 +11,7 @@ import { EthereumContext } from "./EthereumProvider";
 import { Asset, AssetType } from "../lib/ethereum/assets";
 import { Button } from 'react-native-paper';
 
-class Wallet extends React.Component<{
+const Wallet: React.ComponentType<{
   assets: Asset[];
   wallet: ethers.Wallet;
   createWallet: () => void;
@@ -20,49 +20,49 @@ class Wallet extends React.Component<{
     amount: number,
     type: AssetType
   ) => Promise<ethers.providers.TransactionResponse>;
-}> {
-  state = { network: "" };
+}> = props => {
+  const [state, setState] = React.useState({ network: "" });
+  const { network } = state;
+  const { assets, wallet, createWallet, sendAsset } = props;
 
-  public componentDidMount = async () => {
-    if (this.props.wallet) {
-      const network = await this.props.wallet.provider.getNetwork();
-      this.setState({ network: network.name });
-    }
-  };
+  React.useEffect(() => {
+    (async() => {
+      if (props.wallet) {
+        const network = await props.wallet.provider.getNetwork();
+        setState({ ...state, network: network.name });
+      }
+    })()
+  }, [])
 
-  public render() {
-    const { network } = this.state;
-    const { assets, wallet, createWallet, sendAsset } = this.props;
-    return !wallet ? (
-      <View style={styles.centerContainer}>
-        <Button mode="contained" onPress={createWallet}>
-          Create Wallet
-        </Button>
-      </View>
-    ) : (
-      <View style={styles.container}>
-        <Text>{network}</Text>
-        {assets.map((asset) => (
-          <View key={asset.type} style={styles.row}>
-            <Text>{asset.type}</Text>
-            <Text>{wallet.address}</Text>
-            <Text>Balance: {asset.balance}</Text>
-            <TouchableOpacity
-              onPress={() =>
-                sendAsset(
-                  "0x24440C989754C4Ab1636c24d19e19aAb9D068493",
-                  0.1,
-                  asset.type
-                )
-              }
-            >
-              <Text>Send 0.1</Text>
-            </TouchableOpacity>
-          </View>
-        ))}
-      </View>
-    );
-  }
+  return !wallet ? (
+    <View style={styles.centerContainer}>
+      <Button mode="contained" onPress={createWallet}>
+        Create Wallet
+      </Button>
+    </View>
+  ) : (
+    <View style={styles.container}>
+      <Text>{network}</Text>
+      {assets.map((asset) => (
+        <View key={asset.type} style={styles.row}>
+          <Text>{asset.type}</Text>
+          <Text>{wallet.address}</Text>
+          <Text>Balance: {asset.balance}</Text>
+          <TouchableOpacity
+            onPress={() =>
+              sendAsset(
+                "0x24440C989754C4Ab1636c24d19e19aAb9D068493",
+                0.1,
+                asset.type
+              )
+            }
+          >
+            <Text>Send 0.1</Text>
+          </TouchableOpacity>
+        </View>
+      ))}
+    </View>
+  );
 }
 
 const WalletWithData = () => (
