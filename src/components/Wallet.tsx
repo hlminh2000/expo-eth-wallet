@@ -3,7 +3,7 @@ import { View, ActivityIndicator } from "react-native";
 import { ethers } from "ethers";
 import { EthereumContext } from "./EthereumProvider";
 import { Asset, AssetType } from "../lib/ethereum/assets";
-import { Button, Text, Appbar, Chip, Card } from "react-native-paper";
+import { Button, Text, Appbar, Chip, Card, Menu } from "react-native-paper";
 
 const Wallet: React.ComponentType<{
   assets: Asset[];
@@ -18,6 +18,7 @@ const Wallet: React.ComponentType<{
   const [state, setState] = React.useState({ network: "" });
   const { network } = state;
   const { assets, wallet, createWallet, sendAsset } = props;
+  const [showNetworkMenu, setShowNetworkMenu] = React.useState(false);
 
   React.useEffect(() => {
     (async () => {
@@ -52,8 +53,22 @@ const Wallet: React.ComponentType<{
                 alignItems: "center",
               }}
             >
-              <Text>Network: </Text>
-              <Chip icon="network">{network}</Chip>
+              <Menu
+                visible={showNetworkMenu}
+                onDismiss={() => setShowNetworkMenu(false)}
+                anchor={
+                  <Chip
+                    mode="outlined"
+                    icon="network"
+                    onPress={() => setShowNetworkMenu(!showNetworkMenu)}
+                  >
+                    {network}
+                  </Chip>
+                }
+              >
+                <Menu.Item title="Item 1"></Menu.Item>
+                <Menu.Item title="Item 2"></Menu.Item>
+              </Menu>
             </View>
             <View
               style={{
@@ -63,20 +78,19 @@ const Wallet: React.ComponentType<{
                 alignItems: "center",
               }}
             >
-              <Text>Address: </Text>
-              <Chip>{wallet.address.slice(0, 10)}...</Chip>
+              <Chip icon="wallet">{wallet.address.slice(0, 10)}...</Chip>
             </View>
           </View>
           {assets.map((asset) => (
             <Card key={asset.type} style={{ margin: 10 }}>
               <Card.Title title={asset.type}></Card.Title>
-              <Card.Content style={{marginVertical: 5}}>
+              <Card.Content style={{ marginVertical: 5 }}>
                 <Chip>
                   <Text style={{ fontWeight: "bold" }}>{asset.balance}</Text>{" "}
                   {asset.type}
                 </Chip>
               </Card.Content>
-              <Card.Content style={{marginVertical: 5}}>
+              <Card.Content style={{ marginVertical: 5 }}>
                 <Button
                   mode="contained"
                   onPress={() =>
