@@ -12,9 +12,7 @@ export enum WalletStorageType {
 }
 
 const generateMnemonics = () => {
-  return entropyToMnemonic(
-    ethers.utils.randomBytes(16)
-  ).split(" ");
+  return entropyToMnemonic(ethers.utils.randomBytes(16)).split(" ");
 };
 
 const loadWalletFromMnemonics = async (mnemonics: string[]) => {
@@ -62,6 +60,10 @@ export const loadWallet = async (
       if (!mnemonics) throw new Error(`No mnemonics provided`);
       return loadWalletFromMnemonics(mnemonics);
   }
+};
+
+export const clearPrivateKey = async () => {
+  await SecureStore.deleteItemAsync(PRIVATE_KEY_STORAGE_KEY);
 };
 
 export const sendAsset = async (args: {

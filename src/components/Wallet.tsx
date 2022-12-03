@@ -1,30 +1,26 @@
 import * as React from "react";
 import { View, ActivityIndicator } from "react-native";
-import { ethers } from "ethers";
 import { EthereumContext } from "./EthereumProvider";
-import { Asset, AssetType } from "../lib/ethereum/assets";
 import { Button, Text, Appbar, Chip, Card, Menu } from "react-native-paper";
+import { Network } from "@ethersproject/networks";
 
-const Wallet: React.ComponentType<{
-  assets: Asset[];
-  wallet: ethers.Wallet;
-  createWallet: () => void;
-  sendAsset: (
-    to: string,
-    amount: number,
-    type: AssetType
-  ) => Promise<ethers.providers.TransactionResponse>;
-}> = (props) => {
-  const [state, setState] = React.useState({ network: "" });
+const Wallet: React.ComponentType<{}> = (props) => {
+  const { assets, wallet, createWallet, removeWallet, loading } =
+    React.useContext(EthereumContext);
+
+  const [state, setState] = React.useState<{ network: Network | null }>({
+    network: null,
+  });
   const { network } = state;
-  const { assets, wallet, createWallet, sendAsset } = props;
   const [showNetworkMenu, setShowNetworkMenu] = React.useState(false);
 
   React.useEffect(() => {
     (async () => {
-      if (props.wallet) {
-        const network = await props.wallet.provider.getNetwork();
-        setState({ ...state, network: network.name });
+      if (wallet) {
+        console.log("retrieving networks!!!");
+        const network = await wallet.provider.getNetwork();
+        console.log("network: ", network);
+        setState({ ...state, network });
       }
     })();
   }, []);
@@ -36,8 +32,26 @@ const Wallet: React.ComponentType<{
         <Appbar.Content title="Wallet" />
         <Appbar.Action icon="plus" onPress={() => {}} />
       </Appbar.Header>
-      {!wallet ? (
-        <View>
+      {loading ? (
+        <View
+          style={{
+            display: "flex",
+            flex: 1,
+            justifyContent: "center",
+            padding: 10,
+          }}
+        >
+          <ActivityIndicator size="large" />
+        </View>
+      ) : !wallet ? (
+        <View
+          style={{
+            display: "flex",
+            flex: 1,
+            justifyContent: "center",
+            padding: 10,
+          }}
+        >
           <Button mode="contained" onPress={createWallet}>
             Create Wallet
           </Button>
@@ -69,7 +83,7 @@ const Wallet: React.ComponentType<{
                     icon="network"
                     onPress={() => setShowNetworkMenu(!showNetworkMenu)}
                   >
-                    {network}
+                    {state.network?.name}
                   </Chip>
                 }
               >
@@ -87,6 +101,9 @@ const Wallet: React.ComponentType<{
             >
               <Chip icon="wallet">{wallet.address.slice(0, 10)}...</Chip>
             </View>
+            <Button mode="outlined" onPress={removeWallet}>
+              Remove Wallet
+            </Button>
           </View>
           {assets.map((asset) => (
             <Card key={asset.type} style={{ margin: 10 }}>
@@ -97,20 +114,6 @@ const Wallet: React.ComponentType<{
                   {asset.type}
                 </Chip>
               </Card.Content>
-              <Card.Content style={{ marginVertical: 5 }}>
-                <Button
-                  mode="contained"
-                  onPress={() =>
-                    sendAsset(
-                      "0x24440C989754C4Ab1636c24d19e19aAb9D068493",
-                      0.1,
-                      asset.type
-                    )
-                  }
-                >
-                  Send 0.1
-                </Button>
-              </Card.Content>
             </Card>
           ))}
         </View>
@@ -119,21 +122,4 @@ const Wallet: React.ComponentType<{
   );
 };
 
-const WalletWithData = () => (
-  <EthereumContext.Consumer>
-    {({ assets, wallet, createWallet, sendAsset, loading }) =>
-      loading ? (
-        <ActivityIndicator size="large" />
-      ) : (
-        <Wallet
-          assets={assets}
-          wallet={wallet}
-          createWallet={createWallet}
-          sendAsset={sendAsset}
-        />
-      )
-    }
-  </EthereumContext.Consumer>
-);
-
-export default WalletWithData;
+export default Wallet;
