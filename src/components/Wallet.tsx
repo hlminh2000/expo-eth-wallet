@@ -44,7 +44,14 @@ const Wallet: React.ComponentType<{
         </View>
       ) : (
         <View>
-          <View style={{ margin: 10 }}>
+          <View
+            style={{
+              minHeight: 250,
+              backgroundColor: "lightgrey",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
             <View
               style={{
                 margin: 10,
