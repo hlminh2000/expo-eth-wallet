@@ -54,7 +54,7 @@ const Wallet: React.ComponentType<{
           >
             <View
               style={{
-                margin: 10,
+                margin: 5,
                 flexDirection: "row",
                 justifyContent: "center",
                 alignItems: "center",
@@ -79,7 +79,7 @@ const Wallet: React.ComponentType<{
             </View>
             <View
               style={{
-                margin: 10,
+                margin: 5,
                 flexDirection: "row",
                 justifyContent: "center",
                 alignItems: "center",
