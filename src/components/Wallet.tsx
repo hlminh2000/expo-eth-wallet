@@ -8,22 +8,19 @@ const Wallet: React.ComponentType<{}> = (props) => {
   const { assets, wallet, createWallet, removeWallet, loading } =
     React.useContext(EthereumContext);
 
-  const [state, setState] = React.useState<{ network: Network | null }>({
-    network: null,
-  });
-  const { network } = state;
+  const [network, setNetwork] = React.useState<Network | null>(null);
   const [showNetworkMenu, setShowNetworkMenu] = React.useState(false);
 
   React.useEffect(() => {
     (async () => {
       if (wallet) {
-        console.log("retrieving networks!!!");
+        console.log("retrieving networks from wallet", wallet);
         const network = await wallet.provider.getNetwork();
         console.log("network: ", network);
-        setState({ ...state, network });
+        setNetwork(network);
       }
     })();
-  }, []);
+  }, [wallet]);
 
   return (
     <>
@@ -83,7 +80,7 @@ const Wallet: React.ComponentType<{}> = (props) => {
                     icon="network"
                     onPress={() => setShowNetworkMenu(!showNetworkMenu)}
                   >
-                    {state.network?.name}
+                    {network?.name}
                   </Chip>
                 }
               >
