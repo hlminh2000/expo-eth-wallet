@@ -16,7 +16,7 @@ const subscribe = async () => {
     },
     body: JSON.stringify({}),
   });
-  if (resp.status !== 200) throw "nope";
+  if (resp.status !== 200) throw "could not subscribe to QiSpace Enterprise";
 
   const { sub_key } = (await resp.json()) as {
     sub_key: string;
@@ -34,7 +34,7 @@ const getQe = async (byteSize = 16) => {
   const resp = await fetch(`${API_HOST}/kds/api/v1/qe/${byteSize}`, {
     headers: { Authorization: `Bearer ${deviceToken}` },
   });
-  if (resp.status !== 200) throw "nope";
+  if (resp.status !== 200) throw "could not retrieve QE";
 
   const qe = (await resp.json()) as {
     success: string;
