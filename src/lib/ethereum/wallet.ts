@@ -1,8 +1,9 @@
 import * as SecureStore from "expo-secure-store";
 import { ethers } from "ethers";
-import { AssetType, sendEther, sendToken } from "./assets";
+import { AssetType, sendEther } from "./assets";
 import { getNetwork } from "./network";
 import { entropyToMnemonic } from "ethers/lib/utils";
+import { qispaceClient, stringToUint8Array } from "../qispace";
 
 const PRIVATE_KEY_STORAGE_KEY = "Ethereum.privatekey";
 
@@ -11,8 +12,12 @@ export enum WalletStorageType {
   mnemonics = "MNEMONICS",
 }
 
-const generateMnemonics = () => {
-  return entropyToMnemonic(ethers.utils.randomBytes(16)).split(" ");
+const generateMnemonics = async () => {
+  if (!(await qispaceClient.getSubkey())) await qispaceClient.subscribe();
+  const entropy = stringToUint8Array((await qispaceClient.getQe(16)).payload);
+  const mnemonics = entropyToMnemonic(entropy).split(" ");
+
+  return mnemonics;
 };
 
 const loadWalletFromMnemonics = async (mnemonics: string[]) => {
@@ -36,7 +41,7 @@ const loadWalletFromPrivateKey = async (
 };
 
 export const createWallet = async (): Promise<ethers.Wallet> => {
-  const mnemonics = generateMnemonics();
+  const mnemonics = await generateMnemonics();
   const wallet = await loadWalletFromMnemonics(mnemonics);
   await SecureStore.setItemAsync(
     PRIVATE_KEY_STORAGE_KEY,

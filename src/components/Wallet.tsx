@@ -84,8 +84,14 @@ const Wallet: React.ComponentType<{}> = (props) => {
                   </Chip>
                 }
               >
-                <Menu.Item title="Item 1"></Menu.Item>
-                <Menu.Item title="Item 2"></Menu.Item>
+                <Menu.Item
+                  title="Item 1"
+                  onPress={() => setShowNetworkMenu(false)}
+                ></Menu.Item>
+                <Menu.Item
+                  title="Item 2"
+                  onPress={() => setShowNetworkMenu(false)}
+                ></Menu.Item>
               </Menu>
             </View>
             <View
@@ -96,7 +102,7 @@ const Wallet: React.ComponentType<{}> = (props) => {
                 alignItems: "center",
               }}
             >
-              <Chip icon="wallet">{wallet.address.slice(0, 10)}...</Chip>
+              <Chip icon="wallet">{wallet.address}</Chip>
             </View>
             <Button mode="outlined" onPress={removeWallet}>
               Remove Wallet

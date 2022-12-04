@@ -21,7 +21,7 @@ module.exports = {
       supportsTablet: true,
     },
     extra: {
-      NETWORK: process.env.NETWORK || "sepolia",
+      NETWORK: process.env.NETWORK,
     },
   },
 };
