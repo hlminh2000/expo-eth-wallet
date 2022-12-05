@@ -19,6 +19,7 @@ module.exports = {
     assetBundlePatterns: ["**/*"],
     ios: {
       supportsTablet: true,
+      bundleIdentifier: "com.anonymous.swyshwallet"
     },
     android: {
       package: "com.anonymous.swyshwallet"
