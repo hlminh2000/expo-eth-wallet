@@ -20,6 +20,9 @@ module.exports = {
     ios: {
       supportsTablet: true,
     },
+    android: {
+      package: "com.anonymous.swyshwallet"
+    },
     extra: {
       NETWORK: process.env.NETWORK,
     },
