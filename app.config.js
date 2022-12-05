@@ -23,5 +23,8 @@ module.exports = {
     extra: {
       NETWORK: process.env.NETWORK,
     },
+    plugins: [
+      "./plugins/QiSpace/index.js"
+    ]
   },
 };
