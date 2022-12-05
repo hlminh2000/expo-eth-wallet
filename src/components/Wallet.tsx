@@ -1,5 +1,5 @@
 import * as React from "react";
-import { View, ActivityIndicator } from "react-native";
+import { View, ActivityIndicator, Clipboard } from "react-native";
 import { EthereumContext } from "./EthereumProvider";
 import { Button, Text, Appbar, Chip, Card, Menu } from "react-native-paper";
 import { Network } from "@ethersproject/networks";
@@ -102,7 +102,7 @@ const Wallet: React.ComponentType<{}> = (props) => {
                 alignItems: "center",
               }}
             >
-              <Chip icon="wallet">{wallet.address}</Chip>
+              <Chip icon="wallet" onPress={() =>Clipboard.setString(wallet.address)}>{wallet.address}</Chip>
             </View>
             <Button mode="outlined" onPress={removeWallet}>
               Remove Wallet
