@@ -4,7 +4,7 @@ import erc20ABI, { ERC20Contract } from "./contracts/erc20";
 
 export enum AssetType {
   eth = "ETH",
-  test = "MTST",
+  mtst = "MTST",
 }
 
 export interface Asset {

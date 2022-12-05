@@ -18,6 +18,7 @@ const Wallet: React.ComponentType<{}> = (props) => {
         const network = await wallet.provider.getNetwork();
         console.log("network: ", network);
         setNetwork(network);
+        const balance = await wallet.getBalance();
       }
     })();
   }, [wallet]);
@@ -102,7 +103,12 @@ const Wallet: React.ComponentType<{}> = (props) => {
                 alignItems: "center",
               }}
             >
-              <Chip icon="wallet" onPress={() =>Clipboard.setString(wallet.address)}>{wallet.address}</Chip>
+              <Chip
+                icon="wallet"
+                onPress={() => Clipboard.setString(wallet.address)}
+              >
+                {wallet.address}
+              </Chip>
             </View>
             <Button mode="outlined" onPress={removeWallet}>
               Remove Wallet

@@ -9,7 +9,7 @@ import {
 } from "../lib/ethereum/wallet";
 import { loadAssets, AssetType, Asset } from "../lib/ethereum/assets";
 
-const ASSETS = [AssetType.eth, AssetType.test];
+const ASSETS = [AssetType.eth, AssetType.mtst];
 
 export interface Ethereum {
   wallet?: ethers.Wallet;
@@ -28,7 +28,9 @@ interface EthereumProviderProps {
 const EthereumProvider: React.ComponentType<EthereumProviderProps> = (
   props
 ) => {
-  const [state, setState] = useState({ loading: true } as Ethereum);
+  const [wallet, setWallet] = useState<ethers.Wallet | undefined>();
+  const [assets, setAssets] = useState<Asset[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
 
   const { children } = props;
 
@@ -37,30 +39,47 @@ const EthereumProvider: React.ComponentType<EthereumProviderProps> = (
       try {
         const wallet = await loadWallet(WalletStorageType.privateKey);
         const assets = await loadAssets(ASSETS, wallet);
-        setState({ ...state, wallet, assets, loading: false });
+        setWallet(wallet);
+        setAssets(assets);
+        setLoading(false);
       } catch (e) {
-        setState({ ...state, loading: false });
+        setLoading(false);
       }
     })();
   }, []);
 
+  useEffect(() => {
+    if (wallet) {
+      const interval = setInterval(async () => {
+        console.log("yooo!!!");
+        setAssets(await loadAssets(ASSETS, wallet));
+      }, 5000);
+      return () => clearInterval(interval);
+    }
+  }, [wallet]);
+
   return (
     <EthereumContext.Provider
       value={{
-        ...state,
+        loading,
+        wallet,
+        assets,
         createWallet: async () => {
-          setState({ ...state, loading: true });
+          setLoading(true);
           await new Promise((res) => setTimeout(res, 0));
           const wallet = await createWallet();
           console.log("wallet: ", wallet);
           const assets = await loadAssets(ASSETS, wallet);
           console.log("assets: ", assets);
-          setState({ ...state, wallet, assets, loading: false });
+          setWallet(wallet);
+          setAssets(assets);
+          setLoading(false);
         },
         removeWallet: async () => {
-          setState({ ...state, loading: true });
+          setLoading(true);
           await clearPrivateKey();
-          setState({ ...state, wallet: undefined });
+          setWallet(undefined);
+          setLoading(false);
         },
       }}
     >
