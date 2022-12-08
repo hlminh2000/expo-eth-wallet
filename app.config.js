@@ -19,16 +19,17 @@ module.exports = {
     assetBundlePatterns: ["**/*"],
     ios: {
       supportsTablet: true,
-      bundleIdentifier: "com.anonymous.swyshwallet"
+      bundleIdentifier: "com.anonymous.swyshwallet",
     },
     android: {
-      package: "com.anonymous.swyshwallet"
+      package: "com.anonymous.swyshwallet",
     },
     extra: {
       NETWORK: process.env.NETWORK,
+      eas: {
+        projectId: "5f7c4ac8-38fe-44ec-8d9a-e61a730b0f88",
+      },
     },
-    plugins: [
-      "./plugins/QiSpace/index.js"
-    ]
+    plugins: ["./plugins/QiSpace/index.js"],
   },
 };
