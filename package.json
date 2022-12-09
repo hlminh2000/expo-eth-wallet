@@ -12,6 +12,8 @@
     "postinstall": "node_modules/.bin/rn-nodeify --install stream,http,https,os,vm,crypto --yarn --hack && node ./hack.js"
   },
   "dependencies": {
+    "@babel/core": "^7.20.5",
+    "@babel/runtime": "^7.20.6",
     "@ethersproject/shims": "^5.7.0",
     "@react-native-clipboard/clipboard": "^1.11.1",
     "@tradle/react-native-http": "^2.0.0",
