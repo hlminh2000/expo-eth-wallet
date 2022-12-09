@@ -10712,10 +10712,10 @@ react-native-iphone-x-helper@^1.3.1:
   resolved "https://registry.yarnpkg.com/react-native-iphone-x-helper/-/react-native-iphone-x-helper-1.3.1.tgz#20c603e9a0e765fd6f97396638bdeb0e5a60b010"
   integrity sha512-HOf0jzRnq2/aFUcdCJ9w9JGzN3gdEg0zFE4FyYlp4jtidqU03D5X7ZegGKfT1EWteR0gPBGp9ye5T5FvSWi9Yg==
 
-react-native-os@^1.0.1:
-  version "1.2.2"
-  resolved "https://registry.yarnpkg.com/react-native-os/-/react-native-os-1.2.2.tgz#402cee00ac00a0588200a66b90e1d2b5a593fec0"
-  integrity sha512-LfA6bip2P1kKgexvNL26TaIKYrJIdc/xlRZ7WAgi+19s+qq/+l9mk897EDNXgmue/8tRJk55GjlGd709AJY9XA==
+react-native-os@^1.2.6:
+  version "1.2.6"
+  resolved "https://registry.yarnpkg.com/react-native-os/-/react-native-os-1.2.6.tgz#1bb16d78ccad1143972183a04f443cf1af9fbefa"
+  integrity sha512-OlT+xQAcvkcnf7imgXiu+myMkqDt4xw2bP5SlVo19hEn5XHBkPMLX7dk3sSGxxncH/ToMDsf1KLyrPabNVtadA==
 
 react-native-paper@^4.12.5:
   version "4.12.5"

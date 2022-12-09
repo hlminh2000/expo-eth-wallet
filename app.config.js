@@ -1,13 +1,14 @@
 module.exports = {
   expo: {
     name: "Swysh",
-    slug: "swysh-wallet",
+    slug: "quantropi-ethereum-wallet",
     privacy: "public",
     sdkVersion: "47.0.0",
     platforms: ["ios", "android"],
     version: "1.0.0",
     orientation: "portrait",
     icon: "./assets/icon.png",
+    owner: "hlminh2000",
     splash: {
       image: "./assets/splash.png",
       resizeMode: "contain",
