@@ -2,12 +2,14 @@ const { readFile, writeFile } = require("fs/promises");
 
 const file = "./node_modules/react-native-os/android/build.gradle";
 
-const content = await readFile(readFile, "utf8");
+(async () => {
+  const content = await readFile(file, "utf8");
 
-const newContent = content
-  .split(`compile 'com.facebook.react:react-native:+'`)
-  .join(`implementation 'com.facebook.react:react-native:+'`);
+  const newContent = content
+    .split(`compile 'com.facebook.react:react-native:+'`)
+    .join(`implementation 'com.facebook.react:react-native:+'`);
 
-await writeFile(file, newContent, "utf8");
+  await writeFile(file, newContent, "utf8");
 
-console.log("[[[CUSTOM HACK COMPLETED]]]");
+  console.log("[[[CUSTOM HACK COMPLETED]]]");
+})();
