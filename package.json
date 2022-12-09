@@ -9,7 +9,7 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "eject": "expo eject",
-    "postinstall": "node_modules/.bin/rn-nodeify --install stream,http,https,os,vm,crypto --yarn --hack"
+    "postinstall": "node_modules/.bin/rn-nodeify --install stream,http,https,os,vm,crypto --yarn --hack && node ./hack.js"
   },
   "dependencies": {
     "@ethersproject/shims": "^5.7.0",
