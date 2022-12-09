@@ -3,11 +3,10 @@
   "displayName": "ETH and ERC20 wallet built with Expo",
   "version": "0.0.1",
   "private": true,
-  "main": "node_modules/expo/AppEntry.js",
   "scripts": {
-    "start": "expo start --tunnel",
-    "android": "expo start --android",
-    "ios": "expo start --ios",
+    "start": "expo start --dev-client",
+    "android": "expo run:android",
+    "ios": "expo run:ios",
     "eject": "expo eject",
     "postinstall": "node_modules/.bin/rn-nodeify --install stream,http,https,os,vm,crypto --yarn --hack && node ./hack.js"
   },
@@ -19,7 +18,7 @@
     "@tradle/react-native-http": "^2.0.0",
     "crypto-browserify": "^3.12.0",
     "ethers": "^5.4.7",
-    "expo": "^47.0.8",
+    "expo": "~47.0.8",
     "expo-dev-client": "^2.0.1",
     "expo-secure-store": "^12.0.0",
     "https-browserify": "~0.0.0",
@@ -36,7 +35,9 @@
     "readable-stream": "1.0.33",
     "stream-browserify": "^1.0.0",
     "stream-http": "^3.0.0",
-    "web3": "^1.0.0-beta.55"
+    "web3": "^1.0.0-beta.55",
+    "expo-splash-screen": "~0.17.5",
+    "expo-status-bar": "~1.4.2"
   },
   "devDependencies": {
     "@ethersproject/abi": "^5.4.7",
@@ -62,7 +63,8 @@
     "solidity-coverage": "^0.8.0",
     "ts-node": ">=8.0.0",
     "typechain": "^8.1.0",
-    "typescript": ">=4.5.0"
+    "typescript": ">=4.5.0",
+    "@babel/core": "^7.12.9"
   },
   "react-native": {
     "crypto": "react-native-crypto",

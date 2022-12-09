@@ -1,4 +1,5 @@
-module.exports = config => {
+const withLibQeep = () => {};
 
-    return config
-}
+module.exports = (config) => {
+  return config;
+};
