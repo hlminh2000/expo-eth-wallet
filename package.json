@@ -5,6 +5,7 @@
   "private": true,
   "scripts": {
     "start": "expo start --dev-client",
+    "eas:dev:android": "eas build --platform android --profile development",
     "android": "expo run:android",
     "ios": "expo run:ios",
     "eject": "expo eject",
